@@ -11,4 +11,4 @@ processes = ["app"]
   timeout = "5s"
   grace_period = "5m"
   method = "GET"
-  path = "/"
+  path = "/health"

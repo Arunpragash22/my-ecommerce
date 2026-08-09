@@ -58,7 +58,7 @@ export default function Home() {
               src={
                 product.imageUrl.startsWith("http")
                   ? product.imageUrl
-                  : `http://localhost:8080${product.imageUrl}`
+                  : `https://my-ecommerce-okowta.fly.dev${product.imageUrl}`
               }
               alt={product.name}
               style={{
