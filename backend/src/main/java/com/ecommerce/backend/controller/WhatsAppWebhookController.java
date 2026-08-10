@@ -1,6 +1,5 @@
 package com.ecommerce.backend.controller;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -8,8 +7,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/whatsapp")
 public class WhatsAppWebhookController {
 
-    @Value("${whatsapp.verify-token}")
-    private String verifyToken;
+    private static final String VERIFY_TOKEN = "myecommerce_webhook_2026";
 
     @GetMapping("/webhook")
     public ResponseEntity<String> verifyWebhook(
@@ -18,7 +16,7 @@ public class WhatsAppWebhookController {
             @RequestParam("hub.challenge") String challenge
     ) {
 
-        if ("subscribe".equals(mode) && verifyToken.equals(token)) {
+        if ("subscribe".equals(mode) && VERIFY_TOKEN.equals(token)) {
             return ResponseEntity.ok(challenge);
         }
 
@@ -27,10 +25,11 @@ public class WhatsAppWebhookController {
 
     @PostMapping("/webhook")
     public ResponseEntity<String> receiveWebhook(
-            @RequestBody String payload
+            @RequestBody String body
     ) {
 
-        System.out.println("WhatsApp Webhook: " + payload);
+        System.out.println("WhatsApp Webhook:");
+        System.out.println(body);
 
         return ResponseEntity.ok("EVENT_RECEIVED");
     }
