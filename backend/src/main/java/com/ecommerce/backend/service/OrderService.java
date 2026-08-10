@@ -20,6 +20,7 @@ public class OrderService {
 
     private final OrderRepository orderRepository;
     private final ProductRepository productRepository;
+    private final WhatsAppService whatsAppService;
 
     @Transactional
     public Order createOrder(OrderRequest request) {
@@ -71,6 +72,10 @@ public class OrderService {
 
         order.setItems(orderItems);
 
-        return orderRepository.save(order);
+        Order savedOrder = orderRepository.save(order);
+
+        whatsAppService.sendOrderConfirmation(savedOrder);
+
+        return savedOrder;
     }
 }
