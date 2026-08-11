@@ -1,10 +1,12 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { useCartStore } from "../../store/cartStore";
 import api from "../../services/api";
 
 export default function CheckoutPage() {
+  const router = useRouter();
   const cartItems = useCartStore((state) => state.cartItems);
   const clearCart = useCartStore((state) => state.clearCart);
 
@@ -41,46 +43,13 @@ export default function CheckoutPage() {
 
       console.log("Order created:", response.data);
 
-      // 2. Create WhatsApp message
-      const message = `
-🛍️ Order Confirmed!
-
-Order ID: #${response.data.id}
-
-Customer: ${name}
-Phone: ${phone}
-
-Products:
-${cartItems
-  .map(
-    (item) =>
-      `${item.name} × ${item.quantity} - LKR ${
-        item.price * item.quantity
-      }`
-  )
-  .join("\n")}
-
-Total: LKR ${total}
-
-Delivery Address:
-${address}
-
-Thank you for your order! ❤️
-`;
-
-      // 3. Clean phone number
-      const whatsappNumber = phone.replace(/\D/g, "");
-
-      // 4. WhatsApp URL
-      const whatsappUrl =
-        `https://wa.me/${whatsappNumber}` +
-        `?text=${encodeURIComponent(message)}`;
-
-      // 5. Clear cart
       clearCart();
 
-      // 6. Open customer's WhatsApp
-      window.location.href = whatsappUrl;
+      alert(
+        `Order #${response.data.id} placed successfully! You will receive a WhatsApp confirmation shortly.`
+      );
+
+      router.push("/");
 
     } catch (error) {
       console.error("Order creation failed:", error);
