@@ -47,12 +47,12 @@ public class WhatsAppService {
                     .append(item.getQuantity())
                     .append("\n");
 
-            message.append("Price: ₹")
+            message.append("Price: LKR ")
                     .append(item.getPrice())
                     .append("\n\n");
         }
 
-        message.append("💰 Total Amount: ₹")
+        message.append("💰 Total Amount: LKR ")
                 .append(order.getTotalAmount())
                 .append("\n\n");
 

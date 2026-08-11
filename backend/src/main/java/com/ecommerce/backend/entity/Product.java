@@ -34,10 +34,17 @@ public class Product {
 
     private String category;
 
+    @Builder.Default
+    @Column(nullable = false, columnDefinition = "boolean default true")
+    private Boolean active = true;
+
     private LocalDateTime createdAt;
 
     @PrePersist
     public void onCreate() {
         createdAt = LocalDateTime.now();
+        if (active == null) {
+            active = true;
+        }
     }
 }

@@ -20,7 +20,8 @@ public class OrderService {
 
     private final OrderRepository orderRepository;
     private final ProductRepository productRepository;
-    private final WhatsAppService whatsAppService;
+   
+    private final PabblyWebhookService pabblyWebhookService;
 
     @Transactional
     public Order createOrder(OrderRequest request) {
@@ -74,7 +75,7 @@ public class OrderService {
 
         Order savedOrder = orderRepository.save(order);
 
-        whatsAppService.sendOrderConfirmation(savedOrder);
+        pabblyWebhookService.sendOrderNotification(savedOrder);
 
         return savedOrder;
     }

@@ -1,7 +1,7 @@
 package com.ecommerce.backend.controller;
 
 import com.ecommerce.backend.entity.Product;
-import com.ecommerce.backend.repository.ProductRepository;
+import com.ecommerce.backend.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,25 +13,25 @@ import java.util.List;
 @CrossOrigin(origins = "http://localhost:3000")
 public class ProductController {
 
-    private final ProductRepository productRepository;
+    private final ProductService productService;
 
     @GetMapping
     public List<Product> getAllProducts() {
-        return productRepository.findAll();
+        return productService.getActiveProducts();
     }
 
     @GetMapping("/count")
     public long getProductCount() {
-        return productRepository.count();
+        return productService.getActiveProductCount();
     }
 
     @PostMapping
     public Product createProduct(@RequestBody Product product) {
-        return productRepository.save(product);
+        return productService.createProduct(product);
     }
 
     @DeleteMapping("/{id}")
     public void deleteProduct(@PathVariable Long id) {
-        productRepository.deleteById(id);
+        productService.deleteProduct(id);
     }
 }
