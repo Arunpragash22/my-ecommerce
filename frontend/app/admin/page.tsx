@@ -184,434 +184,298 @@ export default function AdminPage() {
     }
   };
 
+  const inputClass =
+    "w-full rounded-xl border border-slate-200 px-4 py-3 text-slate-900 outline-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20";
+
   return (
-    <main
-      style={{
-        minHeight: "100vh",
-        background: "#f5f5f5",
-        padding: "40px",
-      }}
-    >
-      <h1>Admin Portal</h1>
-
-      <button
-        onClick={() => {
-            localStorage.removeItem("adminUser");
-            router.push("/admin/login");
-        }}
-        style={{
-            padding: "10px 20px",
-            background: "red",
-            color: "white",
-            border: "none",
-            borderRadius: "6px",
-            cursor: "pointer",
-            fontWeight: "bold",
-        }}
-        >
-        Logout
-    </button>
-
-      <p>Welcome to Admin Dashboard</p>
-
-      <hr style={{ margin: "30px 0" }} />
-
-      {/* Dashboard */}
-      <h2>Dashboard</h2>
-
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns:
-            "repeat(3, 1fr)",
-          gap: "20px",
-          marginTop: "20px",
-        }}
-      >
-        <div
-          style={{
-            background: "white",
-            border: "1px solid #ddd",
-            padding: "25px",
-            borderRadius: "10px",
-          }}
-        >
-          <h3>Total Products</h3>
-
-          <p
-            style={{
-              fontSize: "35px",
-              fontWeight: "bold",
+    <main className="min-h-screen bg-slate-100">
+      {/* Admin header */}
+      <div className="border-b border-slate-200 bg-white">
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-5 sm:px-6 lg:px-8">
+          <div>
+            <h1 className="text-2xl font-bold text-slate-900">Admin Portal</h1>
+            <p className="text-sm text-slate-500">Manage your store</p>
+          </div>
+          <button
+            onClick={() => {
+              localStorage.removeItem("adminUser");
+              router.push("/admin/login");
             }}
+            className="rounded-xl bg-rose-600 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-rose-700"
           >
-            {productCount}
-          </p>
-        </div>
-
-        <div
-          style={{
-            background: "white",
-            border: "1px solid #ddd",
-            padding: "25px",
-            borderRadius: "10px",
-          }}
-        >
-          <h3>Total Orders</h3>
-
-          <p
-            style={{
-              fontSize: "35px",
-              fontWeight: "bold",
-            }}
-          >
-            {orderCount}
-          </p>
-        </div>
-
-        <div
-          style={{
-            background: "white",
-            border: "1px solid #ddd",
-            padding: "25px",
-            borderRadius: "10px",
-          }}
-        >
-          <h3>Total Sales</h3>
-
-          <p
-            style={{
-              fontSize: "35px",
-              fontWeight: "bold",
-            }}
-          >
-            ₹0
-          </p>
+            Logout
+          </button>
         </div>
       </div>
 
-      {/* Add Product */}
-      <section
-        style={{
-          background: "white",
-          marginTop: "40px",
-          padding: "30px",
-          borderRadius: "12px",
-          maxWidth: "700px",
-        }}
-      >
-        <h2>➕ Add New Product</h2>
-
-        <form onSubmit={handleAddProduct}>
-          <div style={{ marginBottom: "20px" }}>
-            <label>Product Name</label>
-
-            <input
-              type="text"
-              value={name}
-              onChange={(e) =>
-                setName(e.target.value)
-              }
-              placeholder="Enter product name"
-              required
-              style={{
-                display: "block",
-                width: "100%",
-                padding: "12px",
-                marginTop: "6px",
-              }}
-            />
+      <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+        {/* Dashboard stats */}
+        <div className="mb-10 grid grid-cols-1 gap-5 sm:grid-cols-3">
+          <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+            <p className="text-sm font-medium text-slate-500">Total Products</p>
+            <p className="mt-2 text-4xl font-bold text-indigo-600">
+              {productCount}
+            </p>
           </div>
-
-          <div style={{ marginBottom: "20px" }}>
-            <label>Description</label>
-
-            <textarea
-              value={description}
-              onChange={(e) =>
-                setDescription(e.target.value)
-              }
-              placeholder="Enter product description"
-              required
-              rows={4}
-              style={{
-                display: "block",
-                width: "100%",
-                padding: "12px",
-                marginTop: "6px",
-              }}
-            />
+          <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+            <p className="text-sm font-medium text-slate-500">Total Orders</p>
+            <p className="mt-2 text-4xl font-bold text-emerald-600">
+              {orderCount}
+            </p>
           </div>
-
-          <div style={{ marginBottom: "20px" }}>
-            <label>Price</label>
-
-            <input
-              type="number"
-              value={price}
-              onChange={(e) =>
-                setPrice(e.target.value)
-              }
-              placeholder="Enter price"
-              required
-              min="0"
-              style={{
-                display: "block",
-                width: "100%",
-                padding: "12px",
-                marginTop: "6px",
-              }}
-            />
+          <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+            <p className="text-sm font-medium text-slate-500">Total Sales</p>
+            <p className="mt-2 text-4xl font-bold text-violet-600">₹0</p>
           </div>
+        </div>
 
-          <div style={{ marginBottom: "20px" }}>
-            <label>Stock</label>
+        {/* Add product form */}
+        <section className="mb-10 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+          <h2 className="mb-6 text-xl font-bold text-slate-900">
+            Add New Product
+          </h2>
 
-            <input
-              type="number"
-              value={stock}
-              onChange={(e) =>
-                setStock(e.target.value)
-              }
-              placeholder="Enter stock"
-              required
-              min="0"
-              style={{
-                display: "block",
-                width: "100%",
-                padding: "12px",
-                marginTop: "6px",
-              }}
-            />
-          </div>
-
-          <div style={{ marginBottom: "20px" }}>
-            <label>Category</label>
-
-            <input
-              type="text"
-              value={category}
-              onChange={(e) =>
-                setCategory(e.target.value)
-              }
-              placeholder="Example: Shoes"
-              required
-              style={{
-                display: "block",
-                width: "100%",
-                padding: "12px",
-                marginTop: "6px",
-              }}
-            />
-          </div>
-
-          {/* Image */}
-          <div style={{ marginBottom: "20px" }}>
-            <label>Product Image</label>
-
-            <input
-              type="file"
-              accept="image/*"
-              onChange={handleImageChange}
-              required
-              style={{
-                display: "block",
-                marginTop: "10px",
-              }}
-            />
-          </div>
-
-          {/* Image Preview */}
-          {imagePreview && (
-            <div style={{ marginBottom: "20px" }}>
-              <p>Image Preview:</p>
-
-              <img
-                src={imagePreview}
-                alt="Product preview"
-                style={{
-                  width: "250px",
-                  height: "250px",
-                  objectFit: "cover",
-                  borderRadius: "10px",
-                  border: "1px solid #ddd",
-                }}
+          <form onSubmit={handleAddProduct} className="max-w-2xl space-y-5">
+            <div>
+              <label className="mb-1.5 block text-sm font-medium text-slate-700">
+                Product Name
+              </label>
+              <input
+                type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder="Enter product name"
+                required
+                className={inputClass}
               />
             </div>
-          )}
 
-          <button
-            type="submit"
-            disabled={loading}
-            style={{
-              padding: "13px 25px",
-              background: loading
-                ? "#999"
-                : "black",
-              color: "white",
-              border: "none",
-              borderRadius: "7px",
-              cursor: loading
-                ? "not-allowed"
-                : "pointer",
-              fontWeight: "bold",
-            }}
-          >
-            {loading
-              ? "Adding Product..."
-              : "Add Product"}
-          </button>
-        </form>
-      </section>
-      <hr style={{ margin: "50px 0" }} />
+            <div>
+              <label className="mb-1.5 block text-sm font-medium text-slate-700">
+                Description
+              </label>
+              <textarea
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                placeholder="Enter product description"
+                required
+                rows={4}
+                className={`${inputClass} resize-none`}
+              />
+            </div>
 
-        <section
-        style={{
-            background: "white",
-            padding: "30px",
-            borderRadius: "12px",
-        }}
-        >
-        <h2>📦 Product List</h2>
-
-        {products.length === 0 ? (
-            <p>No products found.</p>
-        ) : (
-            products.map((product) => (
-            <div
-                key={product.id}
-                style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "20px",
-                border: "1px solid #ddd",
-                padding: "20px",
-                marginBottom: "15px",
-                borderRadius: "10px",
-                }}
-            >
-                <img
-                src={
-                    product.imageUrl?.startsWith("http")
-                    ? product.imageUrl
-                    : `https://my-ecommerce-okowta.fly.dev${product.imageUrl}`
-                }
-                alt={product.name}
-                style={{
-                    width: "120px",
-                    height: "120px",
-                    objectFit: "cover",
-                    borderRadius: "8px",
-                }}
+            <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+              <div>
+                <label className="mb-1.5 block text-sm font-medium text-slate-700">
+                  Price
+                </label>
+                <input
+                  type="number"
+                  value={price}
+                  onChange={(e) => setPrice(e.target.value)}
+                  placeholder="Enter price"
+                  required
+                  min="0"
+                  className={inputClass}
                 />
-
-                <div style={{ flex: 1 }}>
-                <h3>{product.name}</h3>
-
-                <p>{product.description}</p>
-
-                <p>
-                    <strong>Price:</strong> ₹{product.price}
-                </p>
-
-                <p>
-                    <strong>Stock:</strong> {product.stock}
-                </p>
-
-                <p>
-                    <strong>Category:</strong> {product.category}
-                </p>
-                </div>
-
-                <button
-                onClick={() =>
-                    handleDeleteProduct(product.id)
-                }
-                style={{
-                    padding: "10px 18px",
-                    background: "red",
-                    color: "white",
-                    border: "none",
-                    borderRadius: "6px",
-                    cursor: "pointer",
-                }}
-                >
-                🗑️ Delete
-                </button>
+              </div>
+              <div>
+                <label className="mb-1.5 block text-sm font-medium text-slate-700">
+                  Stock
+                </label>
+                <input
+                  type="number"
+                  value={stock}
+                  onChange={(e) => setStock(e.target.value)}
+                  placeholder="Enter stock"
+                  required
+                  min="0"
+                  className={inputClass}
+                />
+              </div>
             </div>
-            ))
-        )}
-        </section>
-        <hr style={{ margin: "50px 0" }} />
 
-        <section
-        style={{
-            background: "white",
-            padding: "30px",
-            borderRadius: "12px",
-        }}
-        >
-        <h2>📦 Orders</h2>
+            <div>
+              <label className="mb-1.5 block text-sm font-medium text-slate-700">
+                Category
+              </label>
+              <input
+                type="text"
+                value={category}
+                onChange={(e) => setCategory(e.target.value)}
+                placeholder="Example: Shoes"
+                required
+                className={inputClass}
+              />
+            </div>
 
-        {orders.length === 0 ? (
-            <p>No orders found.</p>
-        ) : (
-            orders.map((order) => (
-            <div
-                key={order.id}
-                style={{
-                border: "1px solid #ddd",
-                padding: "20px",
-                marginBottom: "15px",
-                borderRadius: "10px",
-                }}
+            <div>
+              <label className="mb-1.5 block text-sm font-medium text-slate-700">
+                Product Image
+              </label>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleImageChange}
+                required
+                className="mt-1 block w-full text-sm text-slate-500 file:mr-4 file:rounded-lg file:border-0 file:bg-indigo-50 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-indigo-700 hover:file:bg-indigo-100"
+              />
+            </div>
+
+            {imagePreview && (
+              <div>
+                <p className="mb-2 text-sm font-medium text-slate-700">
+                  Image Preview
+                </p>
+                <img
+                  src={imagePreview}
+                  alt="Product preview"
+                  className="h-48 w-48 rounded-xl border border-slate-200 object-cover"
+                />
+              </div>
+            )}
+
+            <button
+              type="submit"
+              disabled={loading}
+              className="rounded-xl bg-indigo-600 px-6 py-3 text-sm font-semibold text-white transition hover:bg-indigo-700 disabled:cursor-not-allowed disabled:bg-slate-300"
             >
-                <h3>Order #{order.id}</h3>
-
-                <p>
-                <strong>Customer:</strong>{" "}
-                {order.customerName}
-                </p>
-
-                <p>
-                <strong>Phone:</strong>{" "}
-                {order.phoneNumber}
-                </p>
-
-                <p>
-                <strong>Address:</strong>{" "}
-                {order.address}
-                </p>
-
-                <p>
-                <strong>Total:</strong>{" "}
-                ₹{order.totalAmount}
-                </p>
-
-                <p>
-                <strong>Date:</strong>{" "}
-                {order.createdAt
-                    ? new Date(order.createdAt).toLocaleString()
-                    : "-"}
-                </p>
-
-                {order.items &&
-                order.items.length > 0 && (
-                    <>
-                    <h4>Products</h4>
-
-                    {order.items.map((item: any) => (
-                        <p key={item.id}>
-                        {item.product?.name} × {item.quantity}
-                        {" — ₹"}
-                        {item.price * item.quantity}
-                        </p>
-                    ))}
-                    </>
-                )}
-            </div>
-            ))
-        )}
+              {loading ? "Adding Product..." : "Add Product"}
+            </button>
+          </form>
         </section>
+
+        {/* Product list */}
+        <section className="mb-10 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+          <h2 className="mb-6 text-xl font-bold text-slate-900">
+            Product List
+          </h2>
+
+          {products.length === 0 ? (
+            <p className="text-slate-500">No products found.</p>
+          ) : (
+            <div className="space-y-4">
+              {products.map((product) => (
+                <div
+                  key={product.id}
+                  className="flex flex-col gap-4 rounded-xl border border-slate-100 bg-slate-50 p-4 sm:flex-row sm:items-center"
+                >
+                  <img
+                    src={
+                      product.imageUrl?.startsWith("http")
+                        ? product.imageUrl
+                        : `https://my-ecommerce-okowta.fly.dev${product.imageUrl}`
+                    }
+                    alt={product.name}
+                    className="h-24 w-24 shrink-0 rounded-lg object-cover"
+                  />
+
+                  <div className="flex-1">
+                    <h3 className="font-semibold text-slate-900">
+                      {product.name}
+                    </h3>
+                    <p className="mt-0.5 text-sm text-slate-500 line-clamp-1">
+                      {product.description}
+                    </p>
+                    <div className="mt-2 flex flex-wrap gap-3 text-sm">
+                      <span className="font-semibold text-indigo-600">
+                        ₹{product.price}
+                      </span>
+                      <span className="text-slate-400">|</span>
+                      <span className="text-slate-600">
+                        Stock: {product.stock}
+                      </span>
+                      <span className="text-slate-400">|</span>
+                      <span className="text-slate-600">
+                        {product.category}
+                      </span>
+                    </div>
+                  </div>
+
+                  <button
+                    onClick={() => handleDeleteProduct(product.id)}
+                    className="shrink-0 rounded-lg bg-rose-50 px-4 py-2 text-sm font-semibold text-rose-600 transition hover:bg-rose-100"
+                  >
+                    Delete
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
+        </section>
+
+        {/* Orders */}
+        <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+          <h2 className="mb-6 text-xl font-bold text-slate-900">Orders</h2>
+
+          {orders.length === 0 ? (
+            <p className="text-slate-500">No orders found.</p>
+          ) : (
+            <div className="space-y-4">
+              {orders.map((order) => (
+                <div
+                  key={order.id}
+                  className="rounded-xl border border-slate-100 bg-slate-50 p-5"
+                >
+                  <div className="mb-3 flex items-center justify-between">
+                    <h3 className="font-bold text-slate-900">
+                      Order #{order.id}
+                    </h3>
+                    <span className="rounded-full bg-emerald-100 px-3 py-1 text-sm font-semibold text-emerald-700">
+                      ₹{order.totalAmount}
+                    </span>
+                  </div>
+
+                  <div className="grid gap-1 text-sm text-slate-600 sm:grid-cols-2">
+                    <p>
+                      <span className="font-medium text-slate-700">
+                        Customer:
+                      </span>{" "}
+                      {order.customerName}
+                    </p>
+                    <p>
+                      <span className="font-medium text-slate-700">
+                        Phone:
+                      </span>{" "}
+                      {order.phoneNumber}
+                    </p>
+                    <p className="sm:col-span-2">
+                      <span className="font-medium text-slate-700">
+                        Address:
+                      </span>{" "}
+                      {order.address}
+                    </p>
+                    <p>
+                      <span className="font-medium text-slate-700">Date:</span>{" "}
+                      {order.createdAt
+                        ? new Date(order.createdAt).toLocaleString()
+                        : "-"}
+                    </p>
+                  </div>
+
+                  {order.items && order.items.length > 0 && (
+                    <div className="mt-4 border-t border-slate-200 pt-3">
+                      <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-400">
+                        Items
+                      </p>
+                      {order.items.map((item: any) => (
+                        <p
+                          key={item.id}
+                          className="text-sm text-slate-600"
+                        >
+                          {item.product?.name} × {item.quantity}
+                          {" — ₹"}
+                          {item.price * item.quantity}
+                        </p>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
+        </section>
+      </div>
     </main>
   );
 }

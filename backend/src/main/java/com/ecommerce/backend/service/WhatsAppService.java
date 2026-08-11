@@ -1,10 +1,14 @@
 package com.ecommerce.backend.service;
 
 import com.ecommerce.backend.entity.Order;
+import com.ecommerce.backend.entity.OrderItem;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 public class WhatsAppService {
@@ -19,27 +23,49 @@ public class WhatsAppService {
 
         String recipient = normalizePhoneNumber(order.getPhoneNumber());
 
-        String message = """
-                🛍️ MyEcommerce - Order Confirmed
+        StringBuilder message = new StringBuilder();
 
-                Order ID: #%d
+        message.append("🛍️ *MyEcommerce - Order Confirmed*\n\n");
 
-                Customer: %s
+        message.append("Order ID: #")
+                .append(order.getId())
+                .append("\n\n");
 
-                Total Amount: ₹%s
+        message.append("Customer: ")
+                .append(order.getCustomerName())
+                .append("\n\n");
 
-                Address:
-                %s
+        message.append("📦 *Order Details*\n\n");
 
-                Thank you for shopping with MyEcommerce!
-                """.formatted(
-                order.getId(),
-                order.getCustomerName(),
-                order.getTotalAmount(),
-                order.getAddress()
+        for (OrderItem item : order.getItems()) {
+
+            message.append("Product: ")
+                    .append(item.getProduct().getName())
+                    .append("\n");
+
+            message.append("Quantity: ")
+                    .append(item.getQuantity())
+                    .append("\n");
+
+            message.append("Price: ₹")
+                    .append(item.getPrice())
+                    .append("\n\n");
+        }
+
+        message.append("💰 Total Amount: ₹")
+                .append(order.getTotalAmount())
+                .append("\n\n");
+
+        message.append("📍 Address:\n")
+                .append(order.getAddress())
+                .append("\n\n");
+
+        message.append("Thank you for shopping with MyEcommerce! ❤️");
+
+        sendWhatsAppMessage(
+                recipient,
+                message.toString()
         );
-
-        sendWhatsAppMessage(recipient, message);
     }
 
     private void sendWhatsAppMessage(
@@ -56,26 +82,23 @@ public class WhatsAppService {
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.setBearerAuth(accessToken);
 
-        String requestBody =
-                """
-                {
-                  "messaging_product": "whatsapp",
-                  "to": "%s",
-                  "type": "text",
-                  "text": {
-                    "body": "%s"
-                  }
-                }
-                """.formatted(
-                        recipient,
-                        message.replace("\"", "\\\"")
-                );
+        Map<String, Object> text = new HashMap<>();
+        text.put("body", message);
 
-        HttpEntity<String> request =
+        Map<String, Object> requestBody = new HashMap<>();
+        requestBody.put("messaging_product", "whatsapp");
+        requestBody.put("to", recipient);
+        requestBody.put("type", "text");
+        requestBody.put("text", text);
+
+        HttpEntity<Map<String, Object>> request =
                 new HttpEntity<>(requestBody, headers);
 
         RestTemplate restTemplate =
                 new RestTemplate();
+
+        System.out.println("Sending WhatsApp message to: " + recipient);
+        System.out.println("WhatsApp URL: " + url);
 
         ResponseEntity<String> response =
                 restTemplate.postForEntity(
@@ -96,10 +119,6 @@ public class WhatsAppService {
 
         if (phone.startsWith("0")) {
             phone = "94" + phone.substring(1);
-        }
-
-        if (phone.startsWith("+")) {
-            phone = phone.substring(1);
         }
 
         return phone;

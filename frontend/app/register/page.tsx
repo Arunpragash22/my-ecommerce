@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import api from "../../services/api";
 
 export default function RegisterPage() {
@@ -51,156 +52,120 @@ export default function RegisterPage() {
   };
 
   return (
-    <main
-      style={{
-        minHeight: "100vh",
-        background: "#f5f5f5",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        padding: "40px",
-      }}
-    >
-      <div
-        style={{
-          background: "white",
-          padding: "35px",
-          borderRadius: "12px",
-          width: "100%",
-          maxWidth: "450px",
-          border: "1px solid #ddd",
-        }}
-      >
-        <h1>📝 Create Account</h1>
+    <main className="flex min-h-[calc(100vh-73px)] items-center justify-center px-4 py-12">
+      <div className="w-full max-w-md rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
+        <div className="mb-8 text-center">
+          <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-violet-100">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-7 w-7 text-violet-600"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth={2}
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"
+              />
+            </svg>
+          </div>
+          <h1 className="text-2xl font-bold text-slate-900">Create Account</h1>
+          <p className="mt-1 text-sm text-slate-500">
+            Create your customer account
+          </p>
+        </div>
 
-        <p>Create your customer account</p>
-
-        <form onSubmit={handleRegister}>
-
-          <div style={{ marginBottom: "15px" }}>
-            <label>Name</label>
-
+        <form onSubmit={handleRegister} className="space-y-4">
+          <div>
+            <label className="mb-1.5 block text-sm font-medium text-slate-700">
+              Name
+            </label>
             <input
               type="text"
               value={name}
-              onChange={(e) =>
-                setName(e.target.value)
-              }
+              onChange={(e) => setName(e.target.value)}
               placeholder="Enter your name"
               required
-              style={{
-                display: "block",
-                width: "100%",
-                padding: "12px",
-                marginTop: "5px",
-              }}
+              className="w-full rounded-xl border border-slate-200 px-4 py-3 text-slate-900 outline-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20"
             />
           </div>
 
-          <div style={{ marginBottom: "15px" }}>
-            <label>Email</label>
-
+          <div>
+            <label className="mb-1.5 block text-sm font-medium text-slate-700">
+              Email
+            </label>
             <input
               type="email"
               value={email}
-              onChange={(e) =>
-                setEmail(e.target.value)
-              }
+              onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter your email"
               required
-              style={{
-                display: "block",
-                width: "100%",
-                padding: "12px",
-                marginTop: "5px",
-              }}
+              className="w-full rounded-xl border border-slate-200 px-4 py-3 text-slate-900 outline-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20"
             />
           </div>
 
-          <div style={{ marginBottom: "15px" }}>
-            <label>Phone</label>
-
+          <div>
+            <label className="mb-1.5 block text-sm font-medium text-slate-700">
+              Phone
+            </label>
             <input
               type="tel"
               value={phone}
-              onChange={(e) =>
-                setPhone(e.target.value)
-              }
+              onChange={(e) => setPhone(e.target.value)}
               placeholder="Enter your phone number"
               required
-              style={{
-                display: "block",
-                width: "100%",
-                padding: "12px",
-                marginTop: "5px",
-              }}
+              className="w-full rounded-xl border border-slate-200 px-4 py-3 text-slate-900 outline-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20"
             />
           </div>
 
-          <div style={{ marginBottom: "15px" }}>
-            <label>Password</label>
-
+          <div>
+            <label className="mb-1.5 block text-sm font-medium text-slate-700">
+              Password
+            </label>
             <input
               type="password"
               value={password}
-              onChange={(e) =>
-                setPassword(e.target.value)
-              }
+              onChange={(e) => setPassword(e.target.value)}
               placeholder="Enter password"
               required
-              style={{
-                display: "block",
-                width: "100%",
-                padding: "12px",
-                marginTop: "5px",
-              }}
+              className="w-full rounded-xl border border-slate-200 px-4 py-3 text-slate-900 outline-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20"
             />
           </div>
 
-          <div style={{ marginBottom: "20px" }}>
-            <label>Confirm Password</label>
-
+          <div>
+            <label className="mb-1.5 block text-sm font-medium text-slate-700">
+              Confirm Password
+            </label>
             <input
               type="password"
               value={confirmPassword}
-              onChange={(e) =>
-                setConfirmPassword(e.target.value)
-              }
+              onChange={(e) => setConfirmPassword(e.target.value)}
               placeholder="Confirm password"
               required
-              style={{
-                display: "block",
-                width: "100%",
-                padding: "12px",
-                marginTop: "5px",
-              }}
+              className="w-full rounded-xl border border-slate-200 px-4 py-3 text-slate-900 outline-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20"
             />
           </div>
 
           <button
             type="submit"
             disabled={loading}
-            style={{
-              width: "100%",
-              padding: "13px",
-              background: loading
-                ? "#999"
-                : "black",
-              color: "white",
-              border: "none",
-              borderRadius: "6px",
-              cursor: loading
-                ? "not-allowed"
-                : "pointer",
-              fontWeight: "bold",
-            }}
+            className="w-full rounded-xl bg-indigo-600 py-3 text-sm font-semibold text-white transition hover:bg-indigo-700 disabled:cursor-not-allowed disabled:bg-slate-300"
           >
-            {loading
-              ? "Creating Account..."
-              : "Register"}
+            {loading ? "Creating Account..." : "Register"}
           </button>
-
         </form>
+
+        <p className="mt-6 text-center text-sm text-slate-500">
+          Already have an account?{" "}
+          <Link
+            href="/login"
+            className="font-semibold text-indigo-600 hover:text-indigo-700"
+          >
+            Login
+          </Link>
+        </p>
       </div>
     </main>
   );

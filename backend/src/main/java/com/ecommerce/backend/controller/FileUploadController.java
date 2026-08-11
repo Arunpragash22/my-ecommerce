@@ -1,51 +1,47 @@
 package com.ecommerce.backend.controller;
 
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.UUID;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/upload")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "*")
 public class FileUploadController {
 
-    private final Path uploadDir = Paths.get("uploads");
+    private final Cloudinary cloudinary;
+
+    public FileUploadController(
+            @Value("${CLOUDINARY_URL}") String cloudinaryUrl
+    ) {
+        this.cloudinary = new Cloudinary(cloudinaryUrl);
+    }
 
     @PostMapping
-    public String uploadImage(@RequestParam("file") MultipartFile file)
-            throws IOException {
+    public ResponseEntity<String> uploadImage(
+            @RequestParam("file") MultipartFile file
+    ) throws IOException {
 
         if (file.isEmpty()) {
-            throw new RuntimeException("Please select an image");
+            return ResponseEntity.badRequest()
+                    .body("Please select an image");
         }
 
-        Files.createDirectories(uploadDir);
-
-        String originalName = file.getOriginalFilename();
-
-        String extension = "";
-
-        if (originalName != null && originalName.contains(".")) {
-            extension =
-                    originalName.substring(originalName.lastIndexOf("."));
-        }
-
-        String fileName =
-                UUID.randomUUID() + extension;
-
-        Path filePath =
-                uploadDir.resolve(fileName);
-
-        Files.copy(
-                file.getInputStream(),
-                filePath
+        Map<?, ?> result = cloudinary.uploader().upload(
+                file.getBytes(),
+                ObjectUtils.asMap(
+                        "folder", "myecommerce/products"
+                )
         );
 
-        return "/uploads/" + fileName;
+        String imageUrl = result.get("secure_url").toString();
+
+        return ResponseEntity.ok(imageUrl);
     }
 }

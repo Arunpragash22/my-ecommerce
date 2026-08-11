@@ -93,127 +93,114 @@ Thank you for your order! ❤️
 
   if (cartItems.length === 0) {
     return (
-      <main style={{ padding: "40px" }}>
-        <h1>Checkout</h1>
-        <p>Your cart is empty.</p>
+      <main className="mx-auto max-w-2xl px-4 py-20 text-center sm:px-6">
+        <h1 className="text-3xl font-bold text-slate-900">Checkout</h1>
+        <p className="mt-4 text-slate-500">Your cart is empty.</p>
       </main>
     );
   }
 
   return (
-    <main
-      style={{
-        padding: "40px",
-        maxWidth: "700px",
-      }}
-    >
-      <h1>Checkout</h1>
+    <main className="mx-auto max-w-4xl px-4 py-10 sm:px-6 lg:px-8">
+      <h1 className="mb-2 text-3xl font-bold text-slate-900">Checkout</h1>
+      <p className="mb-8 text-slate-500">
+        Fill in your details to place the order
+      </p>
 
-      <h2>Order Summary</h2>
+      <div className="grid gap-8 lg:grid-cols-2">
+        {/* Order summary */}
+        <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+          <h2 className="mb-4 text-lg font-semibold text-slate-900">
+            Order Summary
+          </h2>
 
-      {cartItems.map((item) => (
-        <div
-          key={item.id}
-          style={{
-            border: "1px solid #ddd",
-            padding: "15px",
-            marginBottom: "10px",
-            borderRadius: "8px",
-          }}
-        >
-          <strong>{item.name}</strong>
+          <div className="space-y-3">
+            {cartItems.map((item) => (
+              <div
+                key={item.id}
+                className="flex items-center justify-between rounded-xl bg-slate-50 px-4 py-3"
+              >
+                <div>
+                  <p className="font-medium text-slate-900">{item.name}</p>
+                  <p className="text-sm text-slate-500">
+                    Qty: {item.quantity}
+                  </p>
+                </div>
+                <p className="font-semibold text-slate-900">
+                  ₹{item.price * item.quantity}
+                </p>
+              </div>
+            ))}
+          </div>
 
-          <p>
-            Quantity: {item.quantity}
-          </p>
+          <div className="mt-6 flex items-center justify-between border-t border-slate-100 pt-4">
+            <span className="text-lg font-medium text-slate-600">Total</span>
+            <span className="text-2xl font-bold text-indigo-600">₹{total}</span>
+          </div>
+        </section>
 
-          <p>
-            ₹{item.price * item.quantity}
-          </p>
-        </div>
-      ))}
+        {/* Customer form */}
+        <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+          <h2 className="mb-4 text-lg font-semibold text-slate-900">
+            Customer Details
+          </h2>
 
-      <h2>Total: ₹{total}</h2>
+          <form onSubmit={handleSubmit} className="space-y-5">
+            <div>
+              <label className="mb-1.5 block text-sm font-medium text-slate-700">
+                Name
+              </label>
+              <input
+                type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder="Enter your name"
+                required
+                className="w-full rounded-xl border border-slate-200 px-4 py-3 text-slate-900 outline-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20"
+              />
+            </div>
 
-      <hr style={{ margin: "30px 0" }} />
+            <div>
+              <label className="mb-1.5 block text-sm font-medium text-slate-700">
+                Phone Number
+              </label>
+              <input
+                type="tel"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                placeholder="Example: 94774162294"
+                required
+                className="w-full rounded-xl border border-slate-200 px-4 py-3 text-slate-900 outline-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20"
+              />
+              <p className="mt-1.5 text-xs text-slate-400">
+                Enter your WhatsApp number with country code.
+              </p>
+            </div>
 
-      <h2>Customer Details</h2>
+            <div>
+              <label className="mb-1.5 block text-sm font-medium text-slate-700">
+                Address
+              </label>
+              <textarea
+                value={address}
+                onChange={(e) => setAddress(e.target.value)}
+                placeholder="Enter your delivery address"
+                required
+                rows={4}
+                className="w-full resize-none rounded-xl border border-slate-200 px-4 py-3 text-slate-900 outline-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20"
+              />
+            </div>
 
-      <form onSubmit={handleSubmit}>
-        <div style={{ marginBottom: "15px" }}>
-          <label>Name</label>
-
-          <input
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            placeholder="Enter your name"
-            required
-            style={{
-              display: "block",
-              width: "100%",
-              padding: "12px",
-              marginTop: "5px",
-            }}
-          />
-        </div>
-
-        <div style={{ marginBottom: "15px" }}>
-          <label>Phone Number</label>
-
-          <input
-            type="tel"
-            value={phone}
-            onChange={(e) => setPhone(e.target.value)}
-            placeholder="Example: 94774162294"
-            required
-            style={{
-              display: "block",
-              width: "100%",
-              padding: "12px",
-              marginTop: "5px",
-            }}
-          />
-
-          <small>
-            Enter your WhatsApp number with country code.
-          </small>
-        </div>
-
-        <div style={{ marginBottom: "15px" }}>
-          <label>Address</label>
-
-          <textarea
-            value={address}
-            onChange={(e) => setAddress(e.target.value)}
-            placeholder="Enter your delivery address"
-            required
-            rows={5}
-            style={{
-              display: "block",
-              width: "100%",
-              padding: "12px",
-              marginTop: "5px",
-            }}
-          />
-        </div>
-
-        <button
-          type="submit"
-          disabled={loading}
-          style={{
-            padding: "12px 25px",
-            background: loading ? "#999" : "green",
-            color: "white",
-            border: "none",
-            borderRadius: "5px",
-            cursor: loading ? "not-allowed" : "pointer",
-            fontWeight: "bold",
-          }}
-        >
-          {loading ? "Placing Order..." : "Place Order"}
-        </button>
-      </form>
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full rounded-xl bg-emerald-600 py-3.5 text-base font-semibold text-white shadow-sm transition hover:bg-emerald-700 disabled:cursor-not-allowed disabled:bg-slate-300"
+            >
+              {loading ? "Placing Order..." : "Place Order"}
+            </button>
+          </form>
+        </section>
+      </div>
     </main>
   );
 }
