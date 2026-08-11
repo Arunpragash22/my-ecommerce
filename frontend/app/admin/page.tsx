@@ -225,7 +225,7 @@ export default function AdminPage() {
           </div>
           <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
             <p className="text-sm font-medium text-slate-500">Total Sales</p>
-            <p className="mt-2 text-4xl font-bold text-violet-600">₹0</p>
+            <p className="mt-2 text-4xl font-bold text-violet-600">LKR 0</p>
           </div>
         </div>
 
@@ -379,7 +379,7 @@ export default function AdminPage() {
                     </p>
                     <div className="mt-2 flex flex-wrap gap-3 text-sm">
                       <span className="font-semibold text-indigo-600">
-                        ₹{product.price}
+                        LKR {product.price}
                       </span>
                       <span className="text-slate-400">|</span>
                       <span className="text-slate-600">
@@ -422,7 +422,7 @@ export default function AdminPage() {
                       Order #{order.id}
                     </h3>
                     <span className="rounded-full bg-emerald-100 px-3 py-1 text-sm font-semibold text-emerald-700">
-                      ₹{order.totalAmount}
+                      LKR {order.totalAmount}
                     </span>
                   </div>
 
@@ -464,7 +464,7 @@ export default function AdminPage() {
                           className="text-sm text-slate-600"
                         >
                           {item.product?.name} × {item.quantity}
-                          {" — ₹"}
+                          {" — LKR "}
                           {item.price * item.quantity}
                         </p>
                       ))}

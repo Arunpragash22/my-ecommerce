@@ -109,7 +109,7 @@ export default function Home() {
                   <div className="mt-4 flex items-center justify-between">
                     <div>
                       <p className="text-2xl font-bold text-indigo-600">
-                        ₹{product.price}
+                        LKR {product.price}
                       </p>
                       <p className="text-xs text-slate-400">
                         {product.stock > 0
@@ -154,14 +154,14 @@ export default function Home() {
                   <span className="text-slate-400">× {item.quantity}</span>
                 </span>
                 <span className="font-semibold text-slate-900">
-                  ₹{item.price * item.quantity}
+                  LKR {item.price * item.quantity}
                 </span>
               </div>
             ))}
           </div>
           <div className="mt-4 flex items-center justify-between border-t border-slate-100 pt-4">
             <span className="text-lg font-bold text-slate-900">Total</span>
-            <span className="text-2xl font-bold text-indigo-600">₹{total}</span>
+            <span className="text-2xl font-bold text-indigo-600">LKR {total}</span>
           </div>
         </section>
       )}

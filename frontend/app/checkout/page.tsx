@@ -54,13 +54,13 @@ Products:
 ${cartItems
   .map(
     (item) =>
-      `${item.name} × ${item.quantity} - ₹${
+      `${item.name} × ${item.quantity} - LKR ${
         item.price * item.quantity
       }`
   )
   .join("\n")}
 
-Total: ₹${total}
+Total: LKR ${total}
 
 Delivery Address:
 ${address}
@@ -127,7 +127,7 @@ Thank you for your order! ❤️
                   </p>
                 </div>
                 <p className="font-semibold text-slate-900">
-                  ₹{item.price * item.quantity}
+                  LKR {item.price * item.quantity}
                 </p>
               </div>
             ))}
@@ -135,7 +135,7 @@ Thank you for your order! ❤️
 
           <div className="mt-6 flex items-center justify-between border-t border-slate-100 pt-4">
             <span className="text-lg font-medium text-slate-600">Total</span>
-            <span className="text-2xl font-bold text-indigo-600">₹{total}</span>
+            <span className="text-2xl font-bold text-indigo-600">LKR {total}</span>
           </div>
         </section>
 

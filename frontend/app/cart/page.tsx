@@ -66,7 +66,7 @@ export default function CartPage() {
                     {item.name}
                   </h2>
                   <p className="text-sm text-slate-500">
-                    ₹{item.price} each
+                    LKR {item.price} each
                   </p>
                 </div>
 
@@ -90,7 +90,7 @@ export default function CartPage() {
                   </div>
 
                   <p className="min-w-[5rem] text-right font-bold text-slate-900">
-                    ₹{item.price * item.quantity}
+                    LKR {item.price * item.quantity}
                   </p>
 
                   <button
@@ -108,7 +108,7 @@ export default function CartPage() {
             <div className="flex items-center justify-between">
               <span className="text-lg font-medium text-slate-600">Total</span>
               <span className="text-3xl font-bold text-indigo-600">
-                ₹{total}
+                LKR {total}
               </span>
             </div>
 
